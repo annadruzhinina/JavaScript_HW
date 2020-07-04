@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<body>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	<script>
+		'use strict';
+
+// Синтаксис ES5, создания метода в конструкторе (не стоит применять при большом количестве объектов)
+
+      function Product1(name, price) {
+         this.name = name;
+         this.price = price;
+         this.make25PercentDiscount = function(discount) {
+            this.price = this.price - (this.price / 100 * discount);
+         };
+      }
+
+
+
+// Синтаксис ES5, создания метода  через прототип
+
+      const productWithDiscount = {
+        make25PercentDiscount: function(discount) {
+            this.price = this.price - (this.price / 100 * discount);
+         }
+      };
+
+      function Product2(name, price) {
+         this.name = name;
+         this.price = price;
+      }
+      
+      Product2.prototype = productWithDiscount;
+
+
+       // Cинтаксиc ES6
+
+      class Product3 {
+         constructor(name, price) {
+            this.name = name;
+            this.price = price;
+         }
+
+         make25PercentDiscount(discount) {
+            this.price = this.price - (this.price / 100 * discount);
+         }
+      }
+      
+
+      const products = [
+      new Product1('item1', 300),
+      new Product2('item2', 400),
+      new Product3('item3', 500)
+      ];
+
+      console.log("Before", JSON.parse(JSON.stringify(products)));
+
+      console.log("Before JSON", JSON.stringify(products)); 
+
+      for (let product of products) {
+         product.make25PercentDiscount(25);
+
+      }
+      console.log("After", products);
+
+	</script>
+
+</body>
+</head>

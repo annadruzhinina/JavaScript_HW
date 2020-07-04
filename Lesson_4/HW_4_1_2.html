@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        /*
+        1.2 Сделайте в стиле es5, а затем в стиле es6 (по аналогии из урока),
+        а) конструктор Post, который принимает параметры author, text, date и сохраняет их как свойства
+        объекта. Объекты типа Post должны иметь метод edit, который будет принимать текст и записывать
+        его в свойство text объекта.
+        б) конструктор AttachedPost, который принимает параметры author, text, date.
+        Проинициализируйте эти свойства с помощью конструктора Post, чтобы не дублировать код. Также
+        в конструкторе AttachedPost должно создаваться свойство highlighted со значением false.
+        Унаследуйте в объектах типа AttachedPost методы из Post.
+        Объекты типа AttachedPost должны иметь метод makeTextHighlighted, который будет назначать
+        свойству highlighted значение true.
+        */
+
+        "use strict";
+
+        // Cинтаксик ES5
+
+        function Post1(author, text, date) {
+            this.author = author;
+            this.text = text;
+            this.date = date;
+            this.edit = function(text) {
+                this.text = text;
+            };
+        }
+
+        function AttachedPost1(author, text, date, highlighted=false) {
+            Post1.call(this, author, text, date);
+            this.highlighted = highlighted;          
+            this.makeTextHighlighted = function() {
+                this.highlighted = true;
+            };
+
+        }
+
+        let post1 = new AttachedPost1('some autor 1', 'some text 1', '2.07.2020');
+        console.log(post1);
+        post1.edit('some new text 1');
+        console.log(post1);
+        post1.makeTextHighlighted();
+        console.log(post1);
+
+
+        // Cинтаксик ES6
+
+        class Post2 {
+            constructor(author, text, date) {
+                this.author = author;
+                this.text = text;
+                this.date = date;
+            }
+
+            edit(text) {
+                this.text = text;
+            }
+        }
+
+        class AttachedPost2 extends Post2 {
+            constructor(author, text, date, highlighted=false){
+                super(author, text, date);
+                this.highlighted = highlighted;
+            }
+
+            makeTextHighlighted() {
+                this.highlighted = true;
+            }
+                
+        }
+
+        let post2 = new AttachedPost2('some autor 2', 'some text 2', '2.07.2020');
+        console.log(post2);
+        post2.edit('some new text 2');
+        console.log(post2);
+        post2.makeTextHighlighted();
+        console.log(post2);
+        
+
+    </script>
+</body>
+
+</html>
